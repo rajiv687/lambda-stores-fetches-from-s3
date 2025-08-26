@@ -38,12 +38,13 @@ npm install
 ```bash
 npm run build
 ```
-![alt text](assets/image4.png)
 
 3. Build SAM
 ```bash
 sam build
 ```
+![alt text](assets/image4.png)
+
 4. Deploy
 ```bash
 sam deploy --guided
