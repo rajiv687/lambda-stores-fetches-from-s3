@@ -1,0 +1,17 @@
+{
+  "name": "s3-crud-sam-ts",
+  "version": "1.0.0",
+  "main": "dist/handler.js",
+  "scripts": {
+    "build": "tsc"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.700.0",
+    "@aws-sdk/s3-request-presigner": "^3.700.0"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.120",
+    "@types/node": "^24.3.0",
+    "typescript": "^5.2.2"
+  }
+}

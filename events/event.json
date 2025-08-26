@@ -1,0 +1,8 @@
+{
+  "httpMethod": "GET",
+  "path": "/data/test.json",
+  "pathParameters": {
+    "key": "test.json"
+  },
+  "body": null
+}

@@ -1,0 +1,67 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: S3 CRUD with Lambda (Node.js 20 + TypeScript)
+
+Globals:
+  Function:
+    Runtime: nodejs20.x
+    Timeout: 10
+    MemorySize: 128
+
+Resources:
+
+  # S3 Bucket to store JSON files
+  DataBucket:
+    Type: AWS::S3::Bucket
+  # Lambda Function
+  S3CrudFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: dist/handler.handler
+      Runtime: nodejs20.x
+      Timeout: 10
+      MemorySize: 128
+      Environment:
+        Variables:
+          DataBucket: !Ref DataBucket
+      Policies:
+        - S3CrudPolicy:
+            BucketName: !Ref DataBucket
+      Events:
+        # POST /data/{key} -> Create / Update
+        ApiPost:
+          Type: Api
+          Properties:
+            Path: /data/{key}
+            Method: POST
+
+        # GET /data/{key} -> Read single file
+        ApiGet:
+          Type: Api
+          Properties:
+            Path: /data/{key}
+            Method: GET
+
+        # GET /data -> List all files
+        ApiList:
+          Type: Api
+          Properties:
+            Path: /data
+            Method: GET
+
+        # DELETE /data/{key} -> Delete file
+        ApiDelete:
+          Type: Api
+          Properties:
+            Path: /data/{key}
+            Method: DELETE
+
+Outputs:
+
+  ApiUrl:
+    Description: "API Gateway endpoint"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/"
+
+  BucketName:
+    Description: "S3 Bucket Name"
+    Value: !Ref DataBucket
